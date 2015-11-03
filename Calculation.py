@@ -1,6 +1,6 @@
 #-*- encoding: utf-8 -*-
 import re
-s = {'number':'3*5/2-(8*3/(20+3/2-5)+4/(3-2)*3)'}
+s = {'number':'3*5/2-(8*3/(20-3/2-5)+4/(3-2)*3)'}
 k_n=s['number'].count('(')
 def s_b(string):
     tage_number=string.count('(') #统计括号个数
@@ -49,8 +49,8 @@ def jia(b):
 def jian(b):
     sums = 0
     for i in re.split('[+,*,/]',b):
-        if i.find('\-') >=0:
-            su=i.split('\-')
+        if i.find('-') >=0:
+            su=i.split('-')
             sums = reduce(lambda x,y:int(x)-int(y),su)
             s['number'] = s['number'].replace(i,str(sums))
     return sums
@@ -62,16 +62,15 @@ def cal(j):
         return chu(j)
     elif j.find('+') >=0:
         return jia(j)
-    elif j.find('\-') >=0:
+    elif j.find('-') >=0:
         return jian(j)
-
-while k_n >= 1:
+number_len=len(re.split('[+,\-,*,/]',s['number']))
+while k_n > 0:
     jieguo=s_b(s['number'])
-    print jieguo
     feng = cal(jieguo)
     s['number'] = s['number'].replace('('+str(feng)+')',str(feng))
-    print s['number']
     k_n -= 1
+print s['number']
 
 '''
 number_len=len(re.split('[+,\-,*,/]',s['number']))
